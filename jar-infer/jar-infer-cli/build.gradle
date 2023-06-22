@@ -105,5 +105,12 @@ publishing {
             }
         }
    }
+
+    afterEvaluate {
+        project.tasks.named('generateMetadataFileForMavenPublication').configure {
+            dependsOn 'javaSourcesJar'
+            dependsOn 'simpleJavadocJar'
+        }        
+    }
 }
 
