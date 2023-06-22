@@ -21,6 +21,11 @@ dependencies {
     }
 }
 
+java {
+    withJavadocJar()
+    withSourcesJar()
+}
+
 jar {
     manifest {
         attributes(
@@ -40,6 +45,7 @@ shadowJar {
 }
 shadowJar.dependsOn jar
 assemble.dependsOn shadowJar
+
 
 // We disable the default maven publications to make sure only
 // our custom shadow publication is used. Since we use the empty
@@ -67,8 +73,8 @@ publishing {
             // Since we are skipping the default maven publication, we append the `:sources` and
             // `:javadoc` artifacts here. They are also required for Maven Central validation.
             afterEvaluate {
-                artifact project.sourcesJar
-                artifact project.javadocsJar
+                artifact project.javaSourcesJar
+                artifact project.javadocJar
             }
             // The shadow publication does not auto-configure the pom.xml file for us, so we need to
             // set it up manually. We use the opportunity to change the name and description from
@@ -98,5 +104,6 @@ publishing {
                 }
             }
         }
-    }
+   }
 }
+
